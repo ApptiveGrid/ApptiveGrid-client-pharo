@@ -13,7 +13,7 @@ ApptiveJSClient >> get: aString [
 		#mode -> 'no-cors' .
 		#credentials -> 'include'.
 		#headers -> { 
-			'Authorization' ->  'Basic YmE5YTdhMzc4NWY0M2U5NjM2YWU4NGJlZWEzM2Y5N2U6NTZxNXY4amZob3BtZDMzdml6NHJ3NWJ2bw=='  } "asJsObject"
+			'Authorization' ->  'Basic'  } "asJsObject"
 		} asJsObject
 	
 ]
