@@ -1,6 +1,6 @@
 Class {
 	#name : #AGAPIClientTest,
-	#superclass : #AGAPIDependentTestCase,
+	#superclass : #TestCase,
 	#instVars : [
 		'httpClient'
 	],
@@ -18,6 +18,7 @@ AGAPIClientTest >> getEntity [
 { #category : #testing }
 AGAPIClientTest >> getGrid [
 	| space |
+	
 	space := self getSpace.
 	^ space grids first
 ]
@@ -25,7 +26,6 @@ AGAPIClientTest >> getGrid [
 { #category : #testing }
 AGAPIClientTest >> getSpace [
 	| user |
-	self httpClient installUserResponse.
 	user := self newClient user.
 	self assert: user spaces numberOfItems equals: 1.
 	^ user spaces first
@@ -64,6 +64,11 @@ AGAPIClientTest >> secret [
 AGAPIClientTest >> testAddEntity [
 
 	| grid result values |
+	self httpClient installUserResponse. 
+	self httpClient installSpaceResponse.
+	self httpClient installSpaceResponse. 
+	self httpClient installGridsResponse.
+	self httpClient installGridResponse.
 	grid := self getGrid.
 	values := { 1. 'name'. 'description' }.
 	result := grid addEntityWithValues:  values.
