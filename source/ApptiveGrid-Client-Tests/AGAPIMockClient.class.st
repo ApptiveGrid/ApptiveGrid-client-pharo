@@ -14,21 +14,27 @@ AGAPIMockClient class >> responseForGETApptiveAccessCredentialsProxy200 [
 ]
 
 { #category : #mocks }
+AGAPIMockClient class >> responseForGETApptiveAccessCredentialsProxyaccessCredentials200 [
+
+^ {'code'->200. 'contents'-> '{"page":1,"size":1,"numberOfItems":1,"numberOfPages":1,"items":[{"role":"admin","name":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/accessKeys/62e7da4d9583db7986a1905b","method":"get"}}}]}'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
 AGAPIMockClient class >> responseForGETApptiveEntityProxy200 [
 
-^ {'code'->200. 'contents'-> '{"_id":"62e7c9e27165607484a18fe1","62e7c9e27165607484a18fdd":1,"62e7c9e27165607484a18fde":"Name1","62e7c9e27165607484a18fdf":"Description1","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1/EditLink","method":"post"}}}'. 'Location'-> ''.} asDictionary
+^ {'code'->200. 'contents'-> '{"_id":"62e7df239583db3bcfa191ac","62e7df239583db3bcfa191a8":1,"62e7df239583db3bcfa191a9":"Name1","62e7df239583db3bcfa191aa":"Description1","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac/EditLink","method":"post"}}}'. 'Location'-> ''.} asDictionary
 ]
 
 { #category : #mocks }
 AGAPIMockClient class >> responseForGETApptiveEntityProxyentities200 [
 
-^ {'code'->200. 'contents'-> '{"page":1,"size":3,"numberOfItems":3,"numberOfPages":1,"items":[{"_id":"62e7c9e27165607484a18fe1","62e7c9e27165607484a18fdd":1,"62e7c9e27165607484a18fde":"Name1","62e7c9e27165607484a18fdf":"Description1","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe1/EditLink","method":"post"}}},{"_id":"62e7c9e27165607484a18fe2","62e7c9e27165607484a18fdd":2,"62e7c9e27165607484a18fde":"Name2","62e7c9e27165607484a18fdf":"Description2","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe2/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe2","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe2","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe2","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe2/EditLink","method":"post"}}},{"_id":"62e7c9e27165607484a18fe3","62e7c9e27165607484a18fdd":3,"62e7c9e27165607484a18fde":"Name3","62e7c9e27165607484a18fdf":"Description3","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe3/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe3","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe3","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe3","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18fdc/grids/62e7c9e27165607484a18fe0/entities/62e7c9e27165607484a18fe3/EditLink","method":"post"}}}]}'. 'Location'-> ''.} asDictionary
+^ {'code'->200. 'contents'-> '{"page":1,"size":3,"numberOfItems":3,"numberOfPages":1,"items":[{"_id":"62e7df239583db3bcfa191ac","62e7df239583db3bcfa191a8":1,"62e7df239583db3bcfa191a9":"Name1","62e7df239583db3bcfa191aa":"Description1","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac/EditLink","method":"post"}}},{"_id":"62e7df239583db3bcfa191ad","62e7df239583db3bcfa191a8":2,"62e7df239583db3bcfa191a9":"Name2","62e7df239583db3bcfa191aa":"Description2","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad/EditLink","method":"post"}}},{"_id":"62e7df239583db3bcfa191ae","62e7df239583db3bcfa191a8":3,"62e7df239583db3bcfa191a9":"Name3","62e7df239583db3bcfa191aa":"Description3","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae/EditLink","method":"post"}}}]}'. 'Location'-> ''.} asDictionary
 ]
 
 { #category : #mocks }
 AGAPIMockClient class >> responseForGETApptiveGridProxy200 [
 
-^ {'code'->200. 'contents'-> '{"fields":[{"type":{"name":"integer","typeName":"integer","componentTypes":["textfield"]},"key":"integerkey","id":"62e7cca27165607484a19031","name":"id","schema":{"type":"integer"},"_links":{"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19031","method":"patch"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19031/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19031","method":"get"},"extractToGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19031/extractToGrid","method":"post"}}},{"type":{"name":"string","typeName":"string","componentTypes":["textfield"]},"key":"namekey","id":"62e7cca27165607484a19032","name":"name","schema":{"type":"string"},"_links":{"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19032","method":"patch"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19032/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19032","method":"get"},"extractToGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19032/extractToGrid","method":"post"}}},{"type":{"name":"string","typeName":"string","componentTypes":["textfield"]},"key":"descriptionkey","id":"62e7cca27165607484a19033","name":"description","schema":{"type":"string"},"_links":{"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19033","method":"patch"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19033/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19033","method":"get"},"extractToGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/fields/62e7cca27165607484a19033/extractToGrid","method":"post"}}}],"id":"62e7cca27165607484a19034","name":"IdNameDescription","type":"persistent","key":null,"_links":{"views":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/views","method":"get"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034","method":"delete"},"updateFieldName":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/ColumnRename","method":"post"},"forms":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/forms","method":"get"},"virtualGrids":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/virtualgrids","method":"get"},"schema":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/schema","method":"get"},"rename":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/Rename","method":"post"},"addSView":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/sviews","method":"post"},"removeField":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/ColumnRemove","method":"post"},"exportAsCsv":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/csv","method":"get"},"updates":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/updates","method":"get"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034","method":"get"},"addVirtualGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/virtualgrids","method":"post"},"entities":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/entities","method":"get"},"addEntity":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/entities","method":"post"},"addField":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/ColumnAdd","method":"post"},"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034","method":"patch"},"addView":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/views","method":"post"},"addLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/AddLink","method":"post"},"updateFieldType":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/ColumnTypeChange","method":"post"},"sviews":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/sviews","method":"get"},"updateFieldKey":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/ColumnKeyChange","method":"post"},"addForm":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034/forms","method":"post"}},"_embedded":{"views":[],"forms":[]}}'. 'Location'-> ''.} asDictionary
+^ {'code'->200. 'contents'-> '{"fields":[{"type":{"name":"integer","typeName":"integer","componentTypes":["textfield"]},"key":"integerkey","id":"62e7df239583db3bcfa191a8","name":"id","schema":{"type":"integer"},"_links":{"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191a8","method":"patch"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191a8/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191a8","method":"get"},"extractToGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191a8/extractToGrid","method":"post"}}},{"type":{"name":"string","typeName":"string","componentTypes":["textfield"]},"key":"namekey","id":"62e7df239583db3bcfa191a9","name":"name","schema":{"type":"string"},"_links":{"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191a9","method":"patch"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191a9/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191a9","method":"get"},"extractToGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191a9/extractToGrid","method":"post"}}},{"type":{"name":"string","typeName":"string","componentTypes":["textfield"]},"key":"descriptionkey","id":"62e7df239583db3bcfa191aa","name":"description","schema":{"type":"string"},"_links":{"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191aa","method":"patch"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191aa/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191aa","method":"get"},"extractToGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/fields/62e7df239583db3bcfa191aa/extractToGrid","method":"post"}}}],"id":"62e7df239583db3bcfa191ab","name":"IdNameDescription","type":"persistent","key":null,"_links":{"views":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/views","method":"get"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab","method":"delete"},"updateFieldName":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/ColumnRename","method":"post"},"forms":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/forms","method":"get"},"virtualGrids":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/virtualgrids","method":"get"},"schema":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/schema","method":"get"},"rename":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/Rename","method":"post"},"addSView":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/sviews","method":"post"},"removeField":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/ColumnRemove","method":"post"},"exportAsCsv":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/csv","method":"get"},"updates":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/updates","method":"get"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab","method":"get"},"addVirtualGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/virtualgrids","method":"post"},"entities":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities","method":"get"},"addEntity":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities","method":"post"},"addField":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/ColumnAdd","method":"post"},"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab","method":"patch"},"addView":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/views","method":"post"},"addLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/AddLink","method":"post"},"updateFieldType":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/ColumnTypeChange","method":"post"},"sviews":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/sviews","method":"get"},"updateFieldKey":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/ColumnKeyChange","method":"post"},"addForm":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/forms","method":"post"}},"_embedded":{"views":[],"forms":[]}}'. 'Location'-> ''.} asDictionary
 ]
 
 { #category : #mocks }
@@ -72,13 +78,40 @@ AGAPIMockClient class >> responseForPOSTApptiveEntityProxyentities400 [
 ]
 
 { #category : #mocks }
+AGAPIMockClient class >> responseForPOSTApptiveEntityProxyentities400SizeMismatch [
+
+^ {'code'->400. 'contents'-> '{
+	"error" : "parse error",
+	"description" : "Reading entity values failure. Occured while resolving for layout indexed: ''JSONTypeError: Mismatch between number of submitted value and number of fields''"
+}'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
+AGAPIMockClient class >> responseForPOSTApptiveEntityProxyentities400TypeMismatch [
+
+^ {'code'->400. 'contents'-> '{
+	"error" : "parse error",
+	"description" : "Reading entity values failure. Occured while resolving for layout indexed: ''AGWrongTypeError: Value 1 must be of type integer''"
+}'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
 AGAPIMockClient class >> responseForPOSTApptiveEntityProxyupdate200 [
 
-^ {'code'->200. 'contents'-> '{"_id":"62e7c9e17165607484a18f17","integerkey":32,"namekey":"Name1","descriptionkey":"Description1","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e17165607484a18f12/grids/62e7c9e17165607484a18f16/entities/62e7c9e17165607484a18f17/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e17165607484a18f12/grids/62e7c9e17165607484a18f16/entities/62e7c9e17165607484a18f17","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e17165607484a18f12/grids/62e7c9e17165607484a18f16/entities/62e7c9e17165607484a18f17","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e17165607484a18f12/grids/62e7c9e17165607484a18f16/entities/62e7c9e17165607484a18f17","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e17165607484a18f12/grids/62e7c9e17165607484a18f16/entities/62e7c9e17165607484a18f17/EditLink","method":"post"}}}'. 'Location'-> ''.} asDictionary
+^ {'code'->200. 'contents'-> '{"_id":"62e7df239583db3bcfa191ac","integerkey":32,"namekey":"Name1","descriptionkey":"Description1","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac/EditLink","method":"post"}}}'. 'Location'-> ''.} asDictionary
 ]
 
 { #category : #mocks }
 AGAPIMockClient class >> responseForPOSTApptiveEntityProxyupdate400 [
+
+^ {'code'->400. 'contents'-> '{
+	"error" : "parse error",
+	"description" : "Reading entity values failure. Occured while resolving for layout keyAndField: ''AGWrongTypeError: Value 32 must be of type integer''"
+}'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
+AGAPIMockClient class >> responseForPOSTApptiveEntityProxyupdate400TypeMismatch [
 
 ^ {'code'->400. 'contents'-> '{
 	"error" : "parse error",
@@ -104,7 +137,8 @@ AGAPIMockClient class >> responseForPUTApptiveEntityProxy400 [
 { #category : #execution }
 AGAPIMockClient >> execute [
 
-	^ queue nextOrNil
+	response := queue nextOrNil.
+	^ response
 ]
 
 { #category : #execution }
@@ -118,6 +152,30 @@ AGAPIMockClient >> initialize [
 AGAPIMockClient >> install: aZnResponse [
 
 	queue nextPut: aZnResponse
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installAccessCredentialsResponse [
+
+	self install: (self responseForMethod: #GET resource: ApptiveAccessCredentialsProxy operation: #accessCredentials code: 200)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installAddEntityResponse [
+
+	self install: (self responseForMethod: #POST resource: ApptiveEntityProxy operation: #entities code: 201)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installAddEntitySizeMismatchResponse [
+
+	self install: (self responseForMethod: #POST resource: ApptiveEntityProxy operation: #entities code: 400)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installAddEntityTypeMismatchResponse [
+
+	self install: (self responseForMock: #responseForPOSTApptiveEntityProxyentities400TypeMismatch)
 ]
 
 { #category : #'installing mocks' }
@@ -145,6 +203,18 @@ AGAPIMockClient >> installGridsResponse [
 ]
 
 { #category : #'installing mocks' }
+AGAPIMockClient >> installPatchEntityResponse [
+
+	self install: (self responseForMethod: #POST resource: ApptiveEntityProxy operation: #update code: 200)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installPatchEntityTypeMismatchResponse [
+
+	self install: (self responseForMock: #responseForPOSTApptiveEntityProxyupdate400TypeMismatch)
+]
+
+{ #category : #'installing mocks' }
 AGAPIMockClient >> installSpaceResponse [
 
 	self install: (self responseForMethod: #GET resource: ApptiveSpaceProxy code: 200)
@@ -154,6 +224,12 @@ AGAPIMockClient >> installSpaceResponse [
 AGAPIMockClient >> installSpacesResponse [
 
 	self install: (self responseForMethod: #GET resource: ApptiveSpaceProxy operation: #spaces code: 200)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installUpdateEntityResponse [
+
+	self install: (self responseForMethod: #PUT resource: ApptiveEntityProxy code: 200)
 ]
 
 { #category : #'installing mocks' }
@@ -171,7 +247,13 @@ AGAPIMockClient >> responseForMethod: httpMethod resource: resourceClass code: r
 { #category : #private }
 AGAPIMockClient >> responseForMethod: httpMethod resource: resourceClass operation: operationPath code: returnCode [
 
-	^ self responseFromDictionary: (self class perform: ('responseFor',  httpMethod, resourceClass name , operationPath ,  returnCode asString) asSymbol) . 
+	^ self responseForMock: ( ('responseFor',  httpMethod, resourceClass name , operationPath ,  returnCode asString) asSymbol) . 
+]
+
+{ #category : #private }
+AGAPIMockClient >> responseForMock: mockSelector [
+
+	^ self responseFromDictionary: (self class perform: mockSelector) . 
 ]
 
 { #category : #private }
