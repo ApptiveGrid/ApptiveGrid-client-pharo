@@ -163,6 +163,7 @@ AGAPIClientTest >> testUpdateEntitySizeMismatch [
 
 	|  entity |
 	entity := self getEntity.
+	self httpClient installUpdateEntitySizeMismatchResponse.
 	"update expects values for all fields to be submitted"
 	self should: [entity updateWithValues: { 2. 'name2'.  }] raise: ApptiveUnexpectedResponse .
 	
@@ -173,6 +174,7 @@ AGAPIClientTest >> testUpdateEntityTypeMismatch [
 
 	| entity |
 	entity := self getEntity.
+	self httpClient installUpdateEntityTypeMismatchResponse.
 	self should: [  entity updateWithValues: { '2'. 'name2'. 'description2' } ]  raise: ApptiveUnexpectedResponse .
 	
 ]

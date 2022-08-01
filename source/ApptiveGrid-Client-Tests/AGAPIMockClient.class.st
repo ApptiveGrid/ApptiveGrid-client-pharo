@@ -134,6 +134,24 @@ AGAPIMockClient class >> responseForPUTApptiveEntityProxy400 [
 }'. 'Location'-> ''.} asDictionary
 ]
 
+{ #category : #mocks }
+AGAPIMockClient class >> responseForPUTApptiveEntityProxy400SizeMismatch [
+
+^ {'code'->400. 'contents'-> '{
+	"error" : "parse error",
+	"description" : "Reading entity values failure. Occured while resolving for layout indexed: ''JSONTypeError: Mismatch between number of submitted value and number of fields''"
+}'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
+AGAPIMockClient class >> responseForPUTApptiveEntityProxy400TypeMismatch [
+
+^ {'code'->400. 'contents'-> '{
+	"error" : "parse error",
+	"description" : "Reading entity values failure. Occured while resolving for layout indexed: ''AGWrongTypeError: Value 2 must be of type integer''"
+}'. 'Location'-> ''.} asDictionary
+]
+
 { #category : #execution }
 AGAPIMockClient >> execute [
 
@@ -230,6 +248,18 @@ AGAPIMockClient >> installSpacesResponse [
 AGAPIMockClient >> installUpdateEntityResponse [
 
 	self install: (self responseForMethod: #PUT resource: ApptiveEntityProxy code: 200)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installUpdateEntitySizeMismatchResponse [
+
+	self install: (self responseForMock: #responseForPUTApptiveEntityProxy400SizeMismatch)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installUpdateEntityTypeMismatchResponse [
+
+	self install: (self responseForMock: #responseForPUTApptiveEntityProxy400TypeMismatch)
 ]
 
 { #category : #'installing mocks' }
