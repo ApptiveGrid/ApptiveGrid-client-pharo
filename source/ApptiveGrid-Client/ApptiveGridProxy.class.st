@@ -49,39 +49,6 @@ ApptiveGridProxy >> addEntityWithValues: aCollectionOfValues [
 	
 ]
 
-{ #category : #'as yet unclassified' }
-ApptiveGridProxy >> callEntitiesList: aString [
-self halt.
-	(links notNil and: [ links includesKey: aString ]) ifFalse: [
-		self updateFull ].
-	^ links 
-		at: aString 
-		ifPresent: [ :method | self convertEntityList: (self execute: method)   ]
-		ifAbsent: [ 
-			Error signal: 'you are not allowed to execute ', aString asString ]
-]
-
-{ #category : #'as yet unclassified' }
-ApptiveGridProxy >> convertEntity: aCollection [ 
-self halt.
-	^ ApptiveEntityProxy new 
-		fields: aCollection;
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-ApptiveGridProxy >> convertEntityList: aString [ 
-	| pagingList items |
-	self halt.
-	items := (NeoJSONReader fromString: aString) collect: [ :each | 
-			self convertEntity: each ].
-	pagingList := ApptiveList new 
-		apptiveClient: apptiveClient;
-		objectClass: ApptiveEntityProxy;
-		items: items.
-	^ pagingList 
-]
-
 { #category : #accessing }
 ApptiveGridProxy >> entities [
 	"^ entities ifNil: [ 
@@ -100,7 +67,7 @@ ApptiveGridProxy >> fieldNamed: aString [
 
 { #category : #accessing }
 ApptiveGridProxy >> fields [
-	^ fields 
+	^ fields ifNil: [self updateFull. fields  ]
 ]
 
 { #category : #accessing }
@@ -153,11 +120,4 @@ ApptiveGridProxy >> resolveParsing [
 { #category : #accessing }
 ApptiveGridProxy >> space: anApptiveSpaceProxy [ 
 	space := anApptiveSpaceProxy 
-]
-
-{ #category : #adding }
-ApptiveGridProxy >> updateEntityWithValues: aCollectionOfValues [ 
-
-	^ self updateEntity: {#fields -> aCollectionOfValues} asDictionary layout: #indexed
-	
 ]

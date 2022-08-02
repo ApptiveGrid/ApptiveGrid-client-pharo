@@ -17,6 +17,7 @@ ApptiveFieldProxy class >> jsonKeys [
 
 { #category : #accessing }
 ApptiveFieldProxy class >> newInstanceIn: anApptiveProxy [ 
+	self halt.
 	^ anApptiveProxy newField
 ]
 

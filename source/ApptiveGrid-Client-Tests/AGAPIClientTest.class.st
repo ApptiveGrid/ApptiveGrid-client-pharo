@@ -45,12 +45,6 @@ AGAPIClientTest >> httpClient [
 		
 ]
 
-{ #category : #accessing }
-AGAPIClientTest >> key [
-
-	^ AGUser withAccessCredentials accessCredentials anyOne accessKey.
-]
-
 { #category : #private }
 AGAPIClientTest >> newClient [
 
@@ -59,12 +53,6 @@ AGAPIClientTest >> newClient [
 		httpClient: self httpClient;
 		yourself
 		
-]
-
-{ #category : #accessing }
-AGAPIClientTest >> secret [
-
-	^ 'secret'.
 ]
 
 { #category : #testing }
