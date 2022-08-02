@@ -17,7 +17,7 @@ ApptiveFieldProxy class >> jsonKeys [
 
 { #category : #accessing }
 ApptiveFieldProxy class >> newInstanceIn: anApptiveProxy [ 
-	self halt.
+	
 	^ anApptiveProxy newField
 ]
 
@@ -57,6 +57,20 @@ ApptiveFieldProxy >> name: anObject [
 	name := anObject
 ]
 
+{ #category : #private }
+ApptiveFieldProxy >> patch: aDictionary [
+	| r |
+	(self hasLinkNamed: #patch) ifFalse: [ 
+		Error signal: 'you cannot access patch for this field on the backend' ].
+	r := apptiveClient newMethodInvocation
+		objectClass: ApptiveEntityProxy;
+		method: (self linkNamed: #patch);
+		arguments: aDictionary;
+		execute.
+	r isSuccess ifFalse: [ ApptiveUnexpectedResponse  new response: r; signal. ].
+	^ self returnUpdateSuccess
+]
+
 { #category : #printing }
 ApptiveFieldProxy >> printOn: aStream [ 
 	aStream << 'field: ' << name asString
@@ -69,7 +83,19 @@ ApptiveFieldProxy >> type [
 ]
 
 { #category : #accessing }
-ApptiveFieldProxy >> type: anObject [
+ApptiveFieldProxy >> type: aDictionary [
 
-	type := anObject
+	type := (ApptiveFieldType named: (aDictionary at: #name)) 
+]
+
+{ #category : #accessing }
+ApptiveFieldProxy >> typeDictionary: aDictionary [
+
+	self type: (ApptiveFieldType named: (aDictionary at: #name)) 
+]
+
+{ #category : #api }
+ApptiveFieldProxy >> updateType: aType [
+
+	self patch: { 'type' -> aType asJson }
 ]

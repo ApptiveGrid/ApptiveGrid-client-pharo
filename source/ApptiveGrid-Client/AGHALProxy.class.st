@@ -122,7 +122,8 @@ AGHALProxy >> returnOk: aZnResponse objectClass: class [
 ]
 
 { #category : #private }
-AGHALProxy >> returnUpdateOk: aZnResponse [ 
+AGHALProxy >> returnUpdateSuccess [
 
-	^ self initializeFrom: (NeoJSONReader fromString: aZnResponse contents)
+	"if object was successfully updated, we need to synchronize it with backend"
+	self updateFull
 ]
