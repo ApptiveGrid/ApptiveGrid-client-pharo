@@ -85,7 +85,7 @@ ApptiveFieldProxy >> type [
 { #category : #accessing }
 ApptiveFieldProxy >> type: aDictionary [
 
-	type := (ApptiveFieldType named: (aDictionary at: #name)) 
+	type := (ApptiveFieldType fromJson: aDictionary) 
 ]
 
 { #category : #accessing }
@@ -95,7 +95,19 @@ ApptiveFieldProxy >> typeDictionary: aDictionary [
 ]
 
 { #category : #api }
+ApptiveFieldProxy >> updateKey: aKey [
+
+	self patch: { 'key' -> aKey } asDictionary
+]
+
+{ #category : #api }
+ApptiveFieldProxy >> updateName: newname [
+
+	self patch: { 'name' -> newname } asDictionary
+]
+
+{ #category : #api }
 ApptiveFieldProxy >> updateType: aType [
 
-	self patch: { 'type' -> aType asJson }
+	self patch: { 'type' -> aType asJson } asDictionary
 ]

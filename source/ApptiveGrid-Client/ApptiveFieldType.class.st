@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #'instance creation' }
+ApptiveFieldType class >> fromJson: json [
+
+	^ (self named: (json at: #name)) fromJson: json
+]
+
+{ #category : #'instance creation' }
 ApptiveFieldType class >> named: aTypeName [
 
 	^ (self subclasses detect: [ :each | each typeName = aTypeName ] ifNone: [
