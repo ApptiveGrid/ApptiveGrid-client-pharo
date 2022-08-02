@@ -168,6 +168,41 @@ AGAPIClientTest >> testUpdateEntityTypeMismatch [
 ]
 
 { #category : #testing }
+AGAPIClientTest >> testUpdateFieldKey [
+
+	| grid result field key |
+	grid := self getGrid.
+	key := 'newkey'.
+	field := grid fields anyOne.
+	self httpClient installPatchFieldResponse.
+	self httpClient installFieldResponseName: field name key:  key type: field type name. 
+	result := field updateKey: key.
+	self assert: field key equals: key.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testUpdateFieldName [
+
+	| grid result field name |
+	grid := self getGrid.
+	name := 'newname'.
+	field := grid fields anyOne.
+	result := field updateName: name.
+	self assert: field name equals: name.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testUpdateFieldType [
+
+	| grid result field |
+	grid := self getGrid.
+	field := grid fields anyOne.
+	self assert: (field type isKindOf: ApptiveIntegerType).
+	result := field updateType: (ApptiveStringType new).
+	self assert: (field type isKindOf: ApptiveStringType).
+]
+
+{ #category : #testing }
 AGAPIClientTest >> testUser [
 
 	| user |

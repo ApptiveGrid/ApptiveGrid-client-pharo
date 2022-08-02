@@ -32,9 +32,14 @@ AGAPIMockClient class >> responseForGETApptiveEntityProxyentities200 [
 ]
 
 { #category : #mocks }
-AGAPIMockClient class >> responseForGETApptiveFieldProxy200 [
+AGAPIMockClient class >> responseForGETApptiveFieldProxy200Name: fieldName key: fieldKey type: typeName [
 
-^ {'code'->200. 'contents'-> '{"type":{"name":"integer","typeName":"integer","componentTypes":["textfield"]},"key":"newkey","id":"62e9411954e0638dc4a1a574","name":"id","schema":{"type":"integer"},"_links":{"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e9411954e0638dc4a1a573/grids/62e9411954e0638dc4a1a577/fields/62e9411954e0638dc4a1a574","method":"patch"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e9411954e0638dc4a1a573/grids/62e9411954e0638dc4a1a577/fields/62e9411954e0638dc4a1a574/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e9411954e0638dc4a1a573/grids/62e9411954e0638dc4a1a577/fields/62e9411954e0638dc4a1a574","method":"get"},"extractToGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e9411954e0638dc4a1a573/grids/62e9411954e0638dc4a1a577/fields/62e9411954e0638dc4a1a574/extractToGrid","method":"post"}}}'. 'Location'-> ''.} asDictionary
+^ {'code'->200. 'contents'-> '{"type":{"name": "', typeName ,'"
+
+,"typeName":"', typeName,'"
+,"componentTypes":["textfield"]},"key":"', fieldKey,'"
+,"id":"62e9411954e0638dc4a1a574","name":"', fieldName,'"
+,"schema":{"type":"integer"},"_links":{"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e9411954e0638dc4a1a573/grids/62e9411954e0638dc4a1a577/fields/62e9411954e0638dc4a1a574","method":"patch"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e9411954e0638dc4a1a573/grids/62e9411954e0638dc4a1a577/fields/62e9411954e0638dc4a1a574/query","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e9411954e0638dc4a1a573/grids/62e9411954e0638dc4a1a577/fields/62e9411954e0638dc4a1a574","method":"get"},"extractToGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e9411954e0638dc4a1a573/grids/62e9411954e0638dc4a1a577/fields/62e9411954e0638dc4a1a574/extractToGrid","method":"post"}}}'. 'Location'-> ''.} asDictionary
 ]
 
 { #category : #mocks }
@@ -218,6 +223,12 @@ AGAPIMockClient >> installEntitiesResponse [
 AGAPIMockClient >> installEntityResponse [
 
 	self install: (self responseForMethod: #GET resource: ApptiveEntityProxy code: 200)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installFieldResponseName: fieldName key: fieldKey type: typeName [
+
+	self install: (self  responseFromDictionary: (self class responseForGETApptiveFieldProxy200Name: fieldName key: fieldKey type: typeName))
 ]
 
 { #category : #'installing mocks' }
