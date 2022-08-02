@@ -32,7 +32,7 @@ ApptiveGridProxy >> addEntity: anObject layout: layout [
 	(self hasLinkNamed: #addEntity) ifFalse: [ 
 		Error signal: 'you cannot access addEntity on the backend' ].
 	r := apptiveClient newMethodInvocation
-		objectClass: ApptiveEntityProxy;
+		objectClass: ApptiveGridProxy;
 		method: (self linkNamed: #addEntity);
 		query: { #layout -> layout } asDictionary;
 		arguments: anObject;

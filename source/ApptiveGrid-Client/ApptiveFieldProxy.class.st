@@ -63,7 +63,7 @@ ApptiveFieldProxy >> patch: aDictionary [
 	(self hasLinkNamed: #patch) ifFalse: [ 
 		Error signal: 'you cannot access patch for this field on the backend' ].
 	r := apptiveClient newMethodInvocation
-		objectClass: ApptiveEntityProxy;
+		objectClass: ApptiveFieldProxy;
 		method: (self linkNamed: #patch);
 		arguments: aDictionary;
 		execute.
