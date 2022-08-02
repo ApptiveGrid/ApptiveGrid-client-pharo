@@ -173,6 +173,7 @@ AGAPIClientTest >> testUpdateFieldKey [
 	| grid result field key |
 	grid := self getGrid.
 	key := 'newkey'.
+	self httpClient installGridResponse.
 	field := grid fields anyOne.
 	self httpClient installPatchFieldResponse.
 	self httpClient installFieldResponseName: field name key:  key type: field type name. 
@@ -186,7 +187,10 @@ AGAPIClientTest >> testUpdateFieldName [
 	| grid result field name |
 	grid := self getGrid.
 	name := 'newname'.
+	self httpClient installGridResponse.
 	field := grid fields anyOne.
+	self httpClient installPatchFieldResponse.
+	self httpClient installFieldResponseName:  name key:  field key type: field type name. 
 	result := field updateName: name.
 	self assert: field name equals: name.
 ]
@@ -196,8 +200,12 @@ AGAPIClientTest >> testUpdateFieldType [
 
 	| grid result field |
 	grid := self getGrid.
+	self httpClient installGridResponse.
 	field := grid fields anyOne.
+	
 	self assert: (field type isKindOf: ApptiveIntegerType).
+	self httpClient installPatchFieldResponse.
+	self httpClient installFieldResponseName: field name key:  field key type: ApptiveStringType typeName. 
 	result := field updateType: (ApptiveStringType new).
 	self assert: (field type isKindOf: ApptiveStringType).
 ]
