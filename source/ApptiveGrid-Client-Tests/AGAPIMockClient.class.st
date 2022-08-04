@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #mocks }
+AGAPIMockClient class >> responseForDELETEApptiveEntityProxy200 [
+
+^ {'code'->200. 'contents'-> '"deleted"'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
 AGAPIMockClient class >> responseForGETApptiveAccessCredentialsProxy200 [
 
 ^ {'code'->200. 'contents'-> '{"page":1,"size":1,"numberOfItems":1,"numberOfPages":1,"items":[{"role":"admin","name":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/accessKeys/62e7c9e27165607484a1900e","method":"get"}}}]}'. 'Location'-> ''.} asDictionary
@@ -29,6 +35,18 @@ AGAPIMockClient class >> responseForGETApptiveEntityProxy200 [
 AGAPIMockClient class >> responseForGETApptiveEntityProxyentities200 [
 
 ^ {'code'->200. 'contents'-> '{"page":1,"size":3,"numberOfItems":3,"numberOfPages":1,"items":[{"_id":"62e7df239583db3bcfa191ac","62e7df239583db3bcfa191a8":1,"62e7df239583db3bcfa191a9":"Name1","62e7df239583db3bcfa191aa":"Description1","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ac/EditLink","method":"post"}}},{"_id":"62e7df239583db3bcfa191ad","62e7df239583db3bcfa191a8":2,"62e7df239583db3bcfa191a9":"Name2","62e7df239583db3bcfa191aa":"Description2","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ad/EditLink","method":"post"}}},{"_id":"62e7df239583db3bcfa191ae","62e7df239583db3bcfa191a8":3,"62e7df239583db3bcfa191a9":"Name3","62e7df239583db3bcfa191aa":"Description3","_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7df239583db3bcfa191a7/grids/62e7df239583db3bcfa191ab/entities/62e7df239583db3bcfa191ae/EditLink","method":"post"}}}]}'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
+AGAPIMockClient class >> responseForGETApptiveEntityProxyentities: entityIds [
+
+
+	| json entities |
+	json := NeoJSONReader fromString: (self responseForGETApptiveEntityProxyentities200 at: #contents).
+	entities := (json at: #items) select: [ :each | entityIds includes: (each at: '_id')  ].
+
+^ {'code'->200. 'contents'-> ('{"page":1,"size":2,"numberOfItems":2,"numberOfPages":1,"items":' , (NeoJSONWriter toString: entities) ,'
+}'). 'Location'-> ''.} asDictionary
 ]
 
 { #category : #mocks }
@@ -220,6 +238,12 @@ AGAPIMockClient >> installEntitiesResponse [
 ]
 
 { #category : #'installing mocks' }
+AGAPIMockClient >> installEntitiesResponseWith: ids [
+
+	self install: (self responseFromDictionary: (self class responseForGETApptiveEntityProxyentities: ids))
+]
+
+{ #category : #'installing mocks' }
 AGAPIMockClient >> installEntityResponse [
 
 	self install: (self responseForMethod: #GET resource: ApptiveEntityProxy code: 200)
@@ -259,6 +283,12 @@ AGAPIMockClient >> installPatchEntityTypeMismatchResponse [
 AGAPIMockClient >> installPatchFieldResponse [
 
 	self install: (self responseForMock: #responseForPATCHApptiveFieldProxy200)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installRemoveEntityResponse [
+
+	self install: (self responseForMock: #responseForDELETEApptiveEntityProxy200)
 ]
 
 { #category : #'installing mocks' }

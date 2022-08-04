@@ -122,6 +122,12 @@ AGHALProxy >> returnOk: aZnResponse objectClass: class [
 ]
 
 { #category : #private }
+AGHALProxy >> returnRemoveSuccess [
+
+	"if object was successfully removed, the container should be updated"
+]
+
+{ #category : #private }
 AGHALProxy >> returnUpdateSuccess [
 
 	"if object was successfully updated, we need to synchronize it with backend"

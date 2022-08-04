@@ -67,6 +67,25 @@ ApptiveEntityProxy >> patch: anObject layout: layout [
 
 ]
 
+{ #category : #api }
+ApptiveEntityProxy >> remove [
+
+	| r |
+	(self hasLinkNamed: #remove) ifFalse: [ 
+		Error signal:
+			'you cannot access remove for this entity on the backend' ].
+	r := apptiveClient newMethodInvocation
+		     objectClass: ApptiveEntityProxy;
+		     method: (self linkNamed: #remove);
+		     execute.
+	r isSuccess ifFalse: [ 
+		ApptiveUnexpectedResponse new
+			response: r;
+			signal ].
+	grid entities: nil.
+	^ self returnRemoveSuccess
+]
+
 { #category : #private }
 ApptiveEntityProxy >> returnUpdateOk: aZnResponse layout: layout [
 

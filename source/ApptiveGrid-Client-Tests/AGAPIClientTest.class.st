@@ -136,6 +136,19 @@ AGAPIClientTest >> testPatchEntityTypeMismatch [
 ]
 
 { #category : #testing }
+AGAPIClientTest >> testRemoveEntity [
+
+	| entity grid ids |
+	entity := self getEntity.
+	grid := entity grid.
+	ids := (grid entities items collect: #id) asOrderedCollection remove: entity id; yourself.
+	self httpClient installRemoveEntityResponse.
+	self httpClient installEntitiesResponseWith:  ids.
+	entity remove.
+	self assert: (grid entities numberOfItems) equals: 2.
+]
+
+{ #category : #testing }
 AGAPIClientTest >> testUpdateEntity [
 
 	|  result entity |
