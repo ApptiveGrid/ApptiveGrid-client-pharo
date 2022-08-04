@@ -76,6 +76,12 @@ ApptiveFieldProxy >> printOn: aStream [
 	aStream << 'field: ' << name asString
 ]
 
+{ #category : #api }
+ApptiveFieldProxy >> remove [
+
+	^ grid removeFieldId: id
+]
+
 { #category : #accessing }
 ApptiveFieldProxy >> type [
 

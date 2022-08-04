@@ -164,6 +164,30 @@ ApptiveGridProxy >> printOn: aStream [
 	aStream << 'grid: ' << name asString
 ]
 
+{ #category : #private }
+ApptiveGridProxy >> removeField: aDictionary [
+
+	| r |
+	self validateLinkNamed: #removeField.
+	r := apptiveClient newMethodInvocation
+		     objectClass: ApptiveGridProxy;
+		     method: (self linkNamed: #removeField);
+				arguments: aDictionary;
+		     execute.
+	r isSuccess ifFalse: [ 
+		ApptiveUnexpectedResponse new
+			response: r;
+			signal ].
+	self fields: nil.
+	^ self returnRemoveSuccess
+]
+
+{ #category : #api }
+ApptiveGridProxy >> removeFieldId: anId [
+
+	^ self removeField: { #fieldId -> anId  } asDictionary
+]
+
 { #category : #services }
 ApptiveGridProxy >> resolveParsing [
 
