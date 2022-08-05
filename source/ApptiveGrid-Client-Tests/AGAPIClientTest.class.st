@@ -93,6 +93,15 @@ AGAPIClientTest >> testAddEntityTypeMismatch [
 ]
 
 { #category : #testing }
+AGAPIClientTest >> testAddField [
+
+	| grid result |
+	grid := self getGrid.
+	result := grid addField:  'newField' type:  (ApptiveStringType new).
+	self assert: (grid fields  size ) equals: 4.
+]
+
+{ #category : #testing }
 AGAPIClientTest >> testPatchEntity [
 
 	|  result entity |
@@ -136,6 +145,32 @@ AGAPIClientTest >> testPatchEntityTypeMismatch [
 ]
 
 { #category : #testing }
+AGAPIClientTest >> testPatchGridName [
+
+	| grid result name |
+	grid := self getGrid.
+	name := 'newname'.
+	self httpClient installGridResponse.
+	self httpClient installPatchGridResponse. 
+	self httpClient installGridResponseName: name key: grid key fields: grid fields.
+	result := grid updateName: name.
+	self assert: grid name equals: name.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testPatchGriddKey [
+
+	| grid result key |
+	grid := self getGrid.
+	key := 'newkey'.
+	self httpClient installGridResponse.
+	self httpClient installPatchGridResponse. 
+	self httpClient installGridResponseName: grid name key: key fields: grid fields.
+	result := grid updateKey: key.
+	self assert: grid key equals: key.
+]
+
+{ #category : #testing }
 AGAPIClientTest >> testRemoveEntity [
 
 	| entity grid ids |
@@ -146,6 +181,16 @@ AGAPIClientTest >> testRemoveEntity [
 	self httpClient installEntitiesResponseWith:  ids.
 	entity remove.
 	self assert: (grid entities numberOfItems) equals: 2.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testRemoveField [
+
+	| grid field |
+	grid := self getGrid.
+	field := grid fields anyOne.
+	field remove.
+	self assert: (grid fields size) equals: 2.
 ]
 
 { #category : #testing }
