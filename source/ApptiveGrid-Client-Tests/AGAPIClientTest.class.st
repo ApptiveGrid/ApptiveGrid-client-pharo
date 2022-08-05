@@ -186,9 +186,14 @@ AGAPIClientTest >> testRemoveEntity [
 { #category : #testing }
 AGAPIClientTest >> testRemoveField [
 
-	| grid field |
+	| grid field fields |
 	grid := self getGrid.
+	self httpClient installGridResponse. 
 	field := grid fields anyOne.
+	fields := grid fields allButFirst.
+	self httpClient installRemoveFieldResponse.
+	self httpClient installGridResponseName: grid name key: grid key fields:  fields.
+	
 	field remove.
 	self assert: (grid fields size) equals: 2.
 ]
