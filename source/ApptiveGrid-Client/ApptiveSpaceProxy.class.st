@@ -5,7 +5,8 @@ Class {
 		'name',
 		'grids',
 		'owner',
-		'key'
+		'key',
+		'user'
 	],
 	#category : #'ApptiveGrid-Client'
 }
@@ -26,7 +27,7 @@ ApptiveSpaceProxy >> addPersistentGrid [
 	^ self addPersistentGrid: {  } asDictionary
 ]
 
-{ #category : #api }
+{ #category : #private }
 ApptiveSpaceProxy >> addPersistentGrid: aDictionary [
 	| r |
 	self validateLinkNamed: #addGrid.
@@ -112,6 +113,23 @@ ApptiveSpaceProxy >> patch: aDictionary [
 { #category : #printing }
 ApptiveSpaceProxy >> printOn: aStream [ 
 	aStream << 'space: ' << name asString
+]
+
+{ #category : #api }
+ApptiveSpaceProxy >> remove [
+
+	| r |
+	self validateLinkNamed: #remove.
+	r := apptiveClient newMethodInvocation
+		     objectClass: ApptiveSpaceProxy;
+		     method: (self linkNamed: #remove);
+		     execute.
+	r isSuccess ifFalse: [ 
+		ApptiveUnexpectedResponse new
+			response: r;
+			signal ].
+	owner resetSpaces.
+	^ self returnRemoveSuccess
 ]
 
 { #category : #accessing }
