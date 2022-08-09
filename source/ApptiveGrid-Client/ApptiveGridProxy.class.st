@@ -261,3 +261,8 @@ ApptiveGridProxy >> updateName: newname [
 
 	^ self patch: { 'name' -> newname } asDictionary
 ]
+
+{ #category : #api }
+ApptiveGridProxy >> virtualGrids [ 
+	^ (self callPagedList: #virtualGrids objectClass: ApptiveVirtualGridProxy ) do: [ :each | each grid: self ] .
+]
