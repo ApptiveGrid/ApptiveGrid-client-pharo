@@ -26,6 +26,12 @@ AGAPIMockClient class >> responseForDELETEApptiveGridProxy200 [
 ]
 
 { #category : #mocks }
+AGAPIMockClient class >> responseForDELETEApptiveSpaceProxy200 [
+
+^ {'code'->200. 'contents'-> '[]'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
 AGAPIMockClient class >> responseForGETApptiveAccessCredentialsProxy200 [
 
 ^ {'code'->200. 'contents'-> '{"page":1,"size":1,"numberOfItems":1,"numberOfPages":1,"items":[{"role":"admin","name":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/accessKeys/62e7c9e27165607484a1900e","method":"get"}}}]}'. 'Location'-> ''.} asDictionary
@@ -141,6 +147,29 @@ AGAPIMockClient class >> responseForGETApptiveSpaceProxy200Name: aName key: aKey
 AGAPIMockClient class >> responseForGETApptiveSpaceProxyspaces200 [
 
 ^ {'code'->200. 'contents'-> '{"page":1,"size":1,"numberOfItems":1,"numberOfPages":1,"items":[{"key":null,"type":"space","id":"62e7cca27165607484a19030","name":"IdNameDescription","belongsTo":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"get"}}}]}'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
+AGAPIMockClient class >> responseForGETApptiveSpaceProxyspaces: someSpaces [
+
+	| spaces |
+	spaces := String streamContents: [ :stream | 
+		          stream nextPutAll: '['.
+		          someSpaces
+			          do: [ :eachSpace | 
+				          stream nextPutAll:
+					          '{"key":null,"type":"space","id":"' , eachSpace id
+					          ,
+					          '","name":"IdNameDescription","belongsTo":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"get"}}}' ]
+			          separatedBy: [ stream nextPutAll: ', ' ].
+		          stream nextPutAll: ']' ].
+	^ { 
+		  ('code' -> 200).
+		  ('contents'
+		   ->
+		   ('{"page":1,"size":1,"numberOfItems":', someSpaces size asString,',"numberOfPages":1,"items":'
+		   , spaces , '}')).
+		  ('Location' -> '') } asDictionary
 ]
 
 { #category : #mocks }
@@ -452,6 +481,12 @@ AGAPIMockClient >> installRemoveGridResponse [
 ]
 
 { #category : #'installing mocks' }
+AGAPIMockClient >> installRemoveSpaceResponse [
+
+	self install: (self responseForMock: #responseForDELETEApptiveSpaceProxy200)
+]
+
+{ #category : #'installing mocks' }
 AGAPIMockClient >> installSpaceResponse [
 
 	self install: (self responseForMethod: #GET resource: ApptiveSpaceProxy code: 200)
@@ -467,6 +502,12 @@ AGAPIMockClient >> installSpaceResponseName: aName key: aKey grids: grids [
 AGAPIMockClient >> installSpacesResponse [
 
 	self install: (self responseForMethod: #GET resource: ApptiveSpaceProxy operation: #spaces code: 200)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installSpacesResponseWith: spaces [
+
+	self install: (self responseFromDictionary: (self class responseForGETApptiveSpaceProxyspaces: spaces))
 ]
 
 { #category : #'installing mocks' }
