@@ -20,6 +20,12 @@ AGAPIMockClient class >> responseForDELETEApptiveFieldProxy200 [
 ]
 
 { #category : #mocks }
+AGAPIMockClient class >> responseForDELETEApptiveGridProxy200 [
+
+^ {'code'->200. 'contents'-> '[]'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
 AGAPIMockClient class >> responseForGETApptiveAccessCredentialsProxy200 [
 
 ^ {'code'->200. 'contents'-> '{"page":1,"size":1,"numberOfItems":1,"numberOfPages":1,"items":[{"role":"admin","name":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/accessKeys/62e7c9e27165607484a1900e","method":"get"}}}]}'. 'Location'-> ''.} asDictionary
@@ -90,6 +96,29 @@ AGAPIMockClient class >> responseForGETApptiveGridProxygrids200 [
 ]
 
 { #category : #mocks }
+AGAPIMockClient class >> responseForGETApptiveGridProxygrids: aCollectionOfGrids [
+
+	| grids |
+	grids := String streamContents: [ :stream | 
+		         stream nextPutAll: '['.
+		         aCollectionOfGrids
+			         do: [ :eachGrid | 
+				         stream nextPutAll: '{"id":"' , eachGrid id
+					         ,
+					         '","name":"IdNameDescription","key":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034","method":"get"}}}' ]
+			         separatedBy: [ stream nextPutAll: ', ' ].
+		         stream nextPutAll: ']' ].
+
+	^ { 
+		  ('code' -> 200).
+		  ('contents'
+		   ->
+		   ('{"page":1,"size":1,"numberOfItems":1,"numberOfPages":1,"items":'
+		   , grids , '}')).
+		  ('Location' -> '') } asDictionary
+]
+
+{ #category : #mocks }
 AGAPIMockClient class >> responseForGETApptiveSpaceProxy200 [
 
 ^ {'code'->200. 'contents'-> '{"key":null,"type":"space","id":"62e7cca27165607484a19030","name":"IdNameDescription","belongsTo":null,"_links":{"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"delete"},"addShare":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/shares","method":"post"},"copy":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/copy","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"get"},"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"patch"},"grids":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids","method":"get"},"addGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids","method":"post"},"rename":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/Rename","method":"post"},"uploadCSV":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/uploadCSV","method":"post"},"shares":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/shares","method":"get"}},"_embedded":{"shares":[],"grids":[{"id":"62e7cca27165607484a19034","name":"IdNameDescription","key":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034","method":"get"}}}]}}'. 'Location'-> ''.} asDictionary
@@ -98,7 +127,8 @@ AGAPIMockClient class >> responseForGETApptiveSpaceProxy200 [
 { #category : #mocks }
 AGAPIMockClient class >> responseForGETApptiveSpaceProxy200Name: aName key: aKey grids: grids [
 
-^ {'code'->200. 'contents'-> '{"key":null,"type":"space","id":"62e7cca27165607484a19030","name":"IdNameDescription","belongsTo":null,"_links":{"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"delete"},"addShare":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/shares","method":"post"},"copy":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/copy","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"get"},"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"patch"},"grids":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids","method":"get"},"addGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids","method":"post"},"rename":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/Rename","method":"post"},"uploadCSV":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/uploadCSV","method":"post"},"shares":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/shares","method":"get"}},"_embedded":{"shares":[],"grids":[{"id":"62e7cca27165607484a19034","name":"IdNameDescription","key":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034","method":"get"}}}]}}'. 'Location'-> ''.} asDictionary
+^ {'code'->200. 'contents'->( '{"key":"', aKey asString,'"
+,"type":"space","id":"62e7cca27165607484a19030","name":"', aName asString,'","belongsTo":null,"_links":{"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"delete"},"addShare":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/shares","method":"post"},"copy":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/copy","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"get"},"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"patch"},"grids":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids","method":"get"},"addGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids","method":"post"},"rename":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/Rename","method":"post"},"uploadCSV":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/uploadCSV","method":"post"},"shares":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/shares","method":"get"}},"_embedded":{"shares":[],"grids":[{"id":"62e7cca27165607484a19034","name":"IdNameDescription","key":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034","method":"get"}}}]}}'). 'Location'-> ''.} asDictionary
 ]
 
 { #category : #mocks }
@@ -330,6 +360,12 @@ AGAPIMockClient >> installGridsResponse [
 ]
 
 { #category : #'installing mocks' }
+AGAPIMockClient >> installGridsResponseWith: grids [
+
+	self install: (self responseFromDictionary: (self class responseForGETApptiveGridProxygrids: grids))
+]
+
+{ #category : #'installing mocks' }
 AGAPIMockClient >> installPatchEntityResponse [
 
 	self install: (self responseForMethod: #POST resource: ApptiveEntityProxy operation: #update code: 200)
@@ -369,6 +405,12 @@ AGAPIMockClient >> installRemoveEntityResponse [
 AGAPIMockClient >> installRemoveFieldResponse [
 
 	self install: (self responseForMock: #responseForDELETEApptiveFieldProxy200)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installRemoveGridResponse [
+
+	self install: (self responseForMock: #responseForDELETEApptiveGridProxy200)
 ]
 
 { #category : #'installing mocks' }

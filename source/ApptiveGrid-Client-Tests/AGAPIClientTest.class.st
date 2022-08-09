@@ -209,7 +209,7 @@ AGAPIClientTest >> testPatchSpaceKey [
 	name := 'newname'.
 	self httpClient installSpaceResponse.
 	self httpClient installPatchSpaceResponse.
-	self httpClient installSpaceResponseName: 'newname' key: space key grids: {}.
+	self httpClient installSpaceResponseName: space name key: 'newname' grids: {}.
 	result := space updateKey: name.
 	self assert: space key equals: name.
 ]
@@ -220,6 +220,9 @@ AGAPIClientTest >> testPatchSpaceName [
 	| space result name |
 	space := self getSpace.
 	name := 'newname'.
+	self httpClient installSpaceResponse.
+	self httpClient installPatchSpaceResponse.
+	self httpClient installSpaceResponseName:  name key: space key grids: {}.
 	result := space updateName: name.
 	self assert: space name equals: name.
 ]
@@ -255,14 +258,19 @@ AGAPIClientTest >> testRemoveField [
 { #category : #testing }
 AGAPIClientTest >> testRemoveGrid [
 
-	|space grid result grids |
+	| space grid result grids |
 	grid := self getGrid.
+
 	space := grid space.
 	grids := space grids.
+
 	grid := space grids first.
+	self httpClient installGridResponse.
+	self httpClient installRemoveGridResponse.
+	self httpClient installGridsResponseWith:
+		(grids items copyWithout: grid).
 	result := grid remove.
-	self assert: space grids items size equals: (grids items size - 1).
-	
+	self assert: space grids items size equals: grids items size - 1
 ]
 
 { #category : #testing }
