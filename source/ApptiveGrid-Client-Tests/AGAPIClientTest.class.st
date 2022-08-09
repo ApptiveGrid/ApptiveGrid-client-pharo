@@ -14,7 +14,6 @@ AGAPIClientTest >> getEntity [
 	grid := self getGrid.
 	self httpClient installGridResponse.
 	self httpClient installEntitiesResponse .
-	self httpClient installEntityResponse .
 	^ grid entities first
 ]
 
@@ -95,9 +94,17 @@ AGAPIClientTest >> testAddEntityTypeMismatch [
 { #category : #testing }
 AGAPIClientTest >> testAddField [
 
-	| grid result |
+	| grid result fields |
 	grid := self getGrid.
+	self httpClient installGridResponse.
+	fields := grid fields.
+	self httpClient installAddFieldResponse.
+	self httpClient installFieldResponseName: 'newField' key: '' type: (ApptiveStringType typeName).
 	result := grid addField:  'newField' type:  (ApptiveStringType new).
+	self assert: (result isKindOf: ApptiveFieldProxy).
+	self assert: result type name equals: ApptiveStringType typeName.
+	self assert: result  name equals: 'newField'.
+	self httpClient installGridResponseName: grid name key: grid key fields: (fields ,{ result}).
 	self assert: (grid fields  size ) equals: 4.
 ]
 
@@ -203,6 +210,7 @@ AGAPIClientTest >> testUpdateEntity [
 
 	|  result entity |
 	entity := self getEntity.
+	self httpClient installEntityResponse.
 	self httpClient installUpdateEntityResponse  .
 	result := entity updateWithValues: { 2. 'name2'. 'description2' }.
 	self assert: result fields equals: { 2. 'name2'. 'description2' }
@@ -214,6 +222,7 @@ AGAPIClientTest >> testUpdateEntitySizeMismatch [
 
 	|  entity |
 	entity := self getEntity.
+	self httpClient installEntityResponse. 
 	self httpClient installUpdateEntitySizeMismatchResponse.
 	"update expects values for all fields to be submitted"
 	self should: [entity updateWithValues: { 2. 'name2'.  }] raise: ApptiveUnexpectedResponse .
@@ -225,6 +234,7 @@ AGAPIClientTest >> testUpdateEntityTypeMismatch [
 
 	| entity |
 	entity := self getEntity.
+	self httpClient installEntityResponse. 
 	self httpClient installUpdateEntityTypeMismatchResponse.
 	self should: [  entity updateWithValues: { '2'. 'name2'. 'description2' } ]  raise: ApptiveUnexpectedResponse .
 	

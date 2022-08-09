@@ -77,8 +77,8 @@ AGAPIMockClient class >> responseForGETApptiveGridProxy200Name: aName key: aKey 
 
 | json fields |
 	json := NeoJSONReader fromString: (self responseForGETApptiveGridProxy200 at: #contents).
-	fields := (json at: #fields) select: [ :each | (aCollectionOfFields collect: #id) includes: (each at: 'id')  ].
-
+	
+	fields := aCollectionOfFields collect: [ :each | { 'id' -> each id. 'name' -> each name. 'key' -> each key. 'type' -> each type asJson  } asDictionary ].
 ^ {'code'->200. 'contents'-> ('{"fields":', (NeoJSONWriter toString: fields),',"id":"62ed3fa883dea81620a1e28b","name":"', aName,'","type":"persistent","key":"', aKey asString,'"
 ,"_links":{"views":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/views","method":"get"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b","method":"delete"},"updateFieldName":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/ColumnRename","method":"post"},"forms":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/forms","method":"get"},"virtualGrids":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/virtualgrids","method":"get"},"exportAsCsv":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/csv","method":"get"},"schema":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/schema","method":"get"},"addSView":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/sviews","method":"post"},"removeField":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/ColumnRemove","method":"post"},"rename":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/Rename","method":"post"},"query":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/query","method":"get"},"updates":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/updates","method":"get"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b","method":"get"},"addVirtualGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/virtualgrids","method":"post"},"entities":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/entities","method":"get"},"addEntity":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/entities","method":"post"},"addField":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/ColumnAdd","method":"post"},"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b","method":"patch"},"addView":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/views","method":"post"},"addLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/AddLink","method":"post"},"updateFieldType":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/ColumnTypeChange","method":"post"},"updateFieldKey":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/ColumnKeyChange","method":"post"},"sviews":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/sviews","method":"get"},"addForm":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62ed3fa883dea81620a1e287/grids/62ed3fa883dea81620a1e28b/forms","method":"post"}},"_embedded":{"views":[],"forms":[]}}'). 'Location'-> ''.} asDictionary
 ]
@@ -178,6 +178,13 @@ AGAPIMockClient class >> responseForPOSTApptiveEntityProxyupdate400TypeMismatch 
 ]
 
 { #category : #mocks }
+AGAPIMockClient class >> responseForPOSTApptiveGridField201 [
+
+^ {'code'->201. 'contents'-> 'Created /api/users/e88e97f26ff3e6267537a144/spaces/62f21b7451c761429ea22cd5/grids/62f21b7451c761429ea22cd9/fields/62f21b7551c761ec03a22cfe
+'. 'Location'-> '/api/users/e88e97f26ff3e6267537a144/spaces/62f21b7451c761429ea22cd5/grids/62f21b7451c761429ea22cd9/fields/62f21b7551c761ec03a22cfe'.} asDictionary
+]
+
+{ #category : #mocks }
 AGAPIMockClient class >> responseForPUTApptiveEntityProxy200 [
 
 ^ {'code'->200. 'contents'-> '{"_id":"62e7c9e27165607484a18f8c","fields":[2,"name2","description2"],"_links":{"partialUpdate":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18f87/grids/62e7c9e27165607484a18f8b/entities/62e7c9e27165607484a18f8c/update","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18f87/grids/62e7c9e27165607484a18f8b/entities/62e7c9e27165607484a18f8c","method":"get"},"update":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18f87/grids/62e7c9e27165607484a18f8b/entities/62e7c9e27165607484a18f8c","method":"put"},"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18f87/grids/62e7c9e27165607484a18f8b/entities/62e7c9e27165607484a18f8c","method":"delete"},"addEditionLink":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7c9e27165607484a18f87/grids/62e7c9e27165607484a18f8b/entities/62e7c9e27165607484a18f8c/EditLink","method":"post"}}}'. 'Location'-> ''.} asDictionary
@@ -260,6 +267,12 @@ AGAPIMockClient >> installAddEntitySizeMismatchResponse [
 AGAPIMockClient >> installAddEntityTypeMismatchResponse [
 
 	self install: (self responseForMock: #responseForPOSTApptiveEntityProxyentities400TypeMismatch)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installAddFieldResponse [
+
+	self install: (self responseFromDictionary: (self class responseForPOSTApptiveGridField201))
 ]
 
 { #category : #'installing mocks' }
