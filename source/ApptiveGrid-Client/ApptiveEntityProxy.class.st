@@ -69,9 +69,7 @@ ApptiveEntityProxy >> patch: anObject layout: layout [
 ApptiveEntityProxy >> remove [
 
 	| r |
-	(self hasLinkNamed: #remove) ifFalse: [ 
-		Error signal:
-			'you cannot access remove for this entity on the backend' ].
+	self validateLinkNamed: #remove.
 	r := apptiveClient newMethodInvocation
 		     objectClass: ApptiveEntityProxy;
 		     method: (self linkNamed: #remove);

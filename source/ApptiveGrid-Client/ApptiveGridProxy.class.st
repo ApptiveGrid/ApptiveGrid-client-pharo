@@ -72,6 +72,27 @@ ApptiveGridProxy >> addField: fieldName type: aType [
 	
 ]
 
+{ #category : #api }
+ApptiveGridProxy >> addVirtualGrid [
+
+	^ self addVirtualGrid: { 'fields' -> (self fields collect: #id). 'filter' -> {  } asDictionary } asDictionary
+]
+
+{ #category : #api }
+ApptiveGridProxy >> addVirtualGrid: aDictionary [
+	| r |
+	self validateLinkNamed: #addVirtualGrid.
+	r := apptiveClient newMethodInvocation
+		objectClass: ApptiveGridProxy;
+		method: (self linkNamed: #addVirtualGrid);
+		arguments: aDictionary;
+		execute.
+	r isSuccess ifFalse: [ ApptiveUnexpectedResponse  new response: r; signal. ].
+	space resetGrids.
+	^ self returnCreated: r objectClass: ApptiveVirtualGridProxy 
+
+]
+
 { #category : #accessing }
 ApptiveGridProxy >> entities [
 	"^ entities ifNil: [ 
@@ -145,6 +166,14 @@ ApptiveGridProxy >> newField [
 		yourself
 ]
 
+{ #category : #'instance creation' }
+ApptiveGridProxy >> newVirtualGrid [
+	^ ApptiveVirtualGridProxy new
+		apptiveClient: apptiveClient;
+		grid: self;
+		yourself
+]
+
 { #category : #private }
 ApptiveGridProxy >> patch: aDictionary [
 	| r |
@@ -162,6 +191,23 @@ ApptiveGridProxy >> patch: aDictionary [
 { #category : #printing }
 ApptiveGridProxy >> printOn: aStream [ 
 	aStream << 'grid: ' << name asString
+]
+
+{ #category : #api }
+ApptiveGridProxy >> remove [
+
+	| r |
+	self validateLinkNamed: #remove.
+	r := apptiveClient newMethodInvocation
+		     objectClass: ApptiveGridProxy;
+		     method: (self linkNamed: #remove);
+		     execute.
+	r isSuccess ifFalse: [ 
+		ApptiveUnexpectedResponse new
+			response: r;
+			signal ].
+	self space resetGrids.
+	^ self returnRemoveSuccess
 ]
 
 { #category : #private }
@@ -192,6 +238,11 @@ ApptiveGridProxy >> removeFieldId: anId [
 ApptiveGridProxy >> resolveParsing [
 
 	fields ifNotNil: [fields := fields collect: [ :each | (ApptiveFieldProxy newInstanceIn: self) initializeFrom: each ]]
+]
+
+{ #category : #accessing }
+ApptiveGridProxy >> space [
+	^ space 
 ]
 
 { #category : #accessing }
