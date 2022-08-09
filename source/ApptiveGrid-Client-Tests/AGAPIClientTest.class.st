@@ -113,8 +113,13 @@ AGAPIClientTest >> testAddPersistentGrid [
 
 	| space result grids |
 	space := self getSpace.
+	self httpClient installSpaceResponse. 
+	self httpClient installGridsResponse. 
 	grids := space grids.
+	self httpClient installAddGridResponse. 
+	self httpClient installGridResponse. 
 	result := space addPersistentGrid.
+	self httpClient installGridsResponseWith: (grids items , {result}). 
 	self assert: (result isKindOf: ApptiveGridProxy).
 	self assert: (space grids items size ) equals: grids items size +1.
 ]
@@ -125,10 +130,15 @@ AGAPIClientTest >> testAddVirtualGrid [
 	| space result grids grid |
 	grid := self getGrid.
 	space := grid space.
+	self httpClient installGridsResponseWith: {  }.
 	grids := space virtualGrids.
 	self assert: grids items size equals: 0.
+	self httpClient installGridResponse.
+	self httpClient installAddVirtualGridResponse.  
+	self httpClient installVirtualGridResponse. 
 	result := grid addVirtualGrid.
-	self assert: (result isKindOf: ApptiveGridProxy).
+	self assert: (result isKindOf: ApptiveVirtualGridProxy).
+	self httpClient installGridsResponseWith: {result  }.
 	self assert: (space virtualGrids items size ) equals: grids items size +1.
 ]
 
