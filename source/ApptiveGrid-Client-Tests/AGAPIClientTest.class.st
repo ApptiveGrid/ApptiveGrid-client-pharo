@@ -109,6 +109,30 @@ AGAPIClientTest >> testAddField [
 ]
 
 { #category : #testing }
+AGAPIClientTest >> testAddPersistentGrid [
+
+	| space result grids |
+	space := self getSpace.
+	grids := space grids.
+	result := space addPersistentGrid.
+	self assert: (result isKindOf: ApptiveGridProxy).
+	self assert: (space grids items size ) equals: grids items size +1.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testAddVirtualGrid [
+
+	| space result grids grid |
+	grid := self getGrid.
+	space := grid space.
+	grids := space virtualGrids.
+	self assert: grids items size equals: 0.
+	result := grid addVirtualGrid.
+	self assert: (result isKindOf: ApptiveGridProxy).
+	self assert: (space virtualGrids items size ) equals: grids items size +1.
+]
+
+{ #category : #testing }
 AGAPIClientTest >> testPatchEntity [
 
 	|  result entity |
@@ -177,6 +201,29 @@ AGAPIClientTest >> testPatchGriddKey [
 	self assert: grid key equals: key.
 ]
 
+{ #category : #tests }
+AGAPIClientTest >> testPatchSpaceKey [
+
+	| space result name |
+	space := self getSpace.
+	name := 'newname'.
+	self httpClient installSpaceResponse.
+	self httpClient installPatchSpaceResponse.
+	self httpClient installSpaceResponseName: 'newname' key: space key grids: {}.
+	result := space updateKey: name.
+	self assert: space key equals: name.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testPatchSpaceName [
+
+	| space result name |
+	space := self getSpace.
+	name := 'newname'.
+	result := space updateName: name.
+	self assert: space name equals: name.
+]
+
 { #category : #testing }
 AGAPIClientTest >> testRemoveEntity [
 
@@ -203,6 +250,19 @@ AGAPIClientTest >> testRemoveField [
 	
 	field remove.
 	self assert: (grid fields size) equals: 2.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testRemoveGrid [
+
+	|space grid result grids |
+	grid := self getGrid.
+	space := grid space.
+	grids := space grids.
+	grid := space grids first.
+	result := grid remove.
+	self assert: space grids items size equals: (grids items size - 1).
+	
 ]
 
 { #category : #testing }

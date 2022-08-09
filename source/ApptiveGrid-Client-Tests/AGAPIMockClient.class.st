@@ -96,6 +96,12 @@ AGAPIMockClient class >> responseForGETApptiveSpaceProxy200 [
 ]
 
 { #category : #mocks }
+AGAPIMockClient class >> responseForGETApptiveSpaceProxy200Name: aName key: aKey grids: grids [
+
+^ {'code'->200. 'contents'-> '{"key":null,"type":"space","id":"62e7cca27165607484a19030","name":"IdNameDescription","belongsTo":null,"_links":{"remove":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"delete"},"addShare":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/shares","method":"post"},"copy":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/copy","method":"post"},"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"get"},"patch":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"patch"},"grids":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids","method":"get"},"addGrid":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids","method":"post"},"rename":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/Rename","method":"post"},"uploadCSV":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/uploadCSV","method":"post"},"shares":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/shares","method":"get"}},"_embedded":{"shares":[],"grids":[{"id":"62e7cca27165607484a19034","name":"IdNameDescription","key":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030/grids/62e7cca27165607484a19034","method":"get"}}}]}}'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
 AGAPIMockClient class >> responseForGETApptiveSpaceProxyspaces200 [
 
 ^ {'code'->200. 'contents'-> '{"page":1,"size":1,"numberOfItems":1,"numberOfPages":1,"items":[{"key":null,"type":"space","id":"62e7cca27165607484a19030","name":"IdNameDescription","belongsTo":null,"_links":{"self":{"href":"/api/users/e88e97f26ff3e6267537a144/spaces/62e7cca27165607484a19030","method":"get"}}}]}'. 'Location'-> ''.} asDictionary
@@ -115,6 +121,12 @@ AGAPIMockClient class >> responseForPATCHApptiveFieldProxy200 [
 
 { #category : #mocks }
 AGAPIMockClient class >> responseForPATCHApptiveGridProxy200 [
+
+^ {'code'->200. 'contents'-> '{}'. 'Location'-> ''.} asDictionary
+]
+
+{ #category : #mocks }
+AGAPIMockClient class >> responseForPATCHApptiveSpaceProxy200 [
 
 ^ {'code'->200. 'contents'-> '{}'. 'Location'-> ''.} asDictionary
 ]
@@ -342,6 +354,12 @@ AGAPIMockClient >> installPatchGridResponse [
 ]
 
 { #category : #'installing mocks' }
+AGAPIMockClient >> installPatchSpaceResponse [
+
+	self install: (self responseForMock: #responseForPATCHApptiveSpaceProxy200 )
+]
+
+{ #category : #'installing mocks' }
 AGAPIMockClient >> installRemoveEntityResponse [
 
 	self install: (self responseForMock: #responseForDELETEApptiveEntityProxy200)
@@ -357,6 +375,12 @@ AGAPIMockClient >> installRemoveFieldResponse [
 AGAPIMockClient >> installSpaceResponse [
 
 	self install: (self responseForMethod: #GET resource: ApptiveSpaceProxy code: 200)
+]
+
+{ #category : #'installing mocks' }
+AGAPIMockClient >> installSpaceResponseName: aName key: aKey grids: grids [
+
+	self install: (self  responseFromDictionary: (self class responseForGETApptiveSpaceProxy200Name: aName key: aKey grids: grids))
 ]
 
 { #category : #'installing mocks' }
