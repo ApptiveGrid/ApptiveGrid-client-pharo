@@ -54,3 +54,31 @@ ApptiveVirtualGridProxy >> sorting: anObject [
 
 	sorting := anObject
 ]
+
+{ #category : #private }
+ApptiveVirtualGridProxy >> update: aDictionary [
+	| r |
+	
+	self validateLinkNamed: #update.
+	r := apptiveClient newMethodInvocation
+		objectClass: ApptiveVirtualGridProxy;
+		method: (self linkNamed: #update);
+		arguments: aDictionary;
+		execute.
+	r isSuccess ifFalse: [ ApptiveUnexpectedResponse  new response: r; signal. ].
+	^ self returnUpdateSuccess
+]
+
+{ #category : #api }
+ApptiveVirtualGridProxy >> updateName: aName filter: aFilter fields: fieldIds [ 
+
+
+	^ self updateName: aName filter: aFilter fields: fieldIds sorting: nil
+]
+
+{ #category : #api }
+ApptiveVirtualGridProxy >> updateName: aName filter: aFilter fields: fieldIds sorting: aSorting [
+
+
+	^ self update: { #name -> aName. #filter -> aFilter. #fields -> fieldIds. #sorting -> (aSorting ifNil: [ sorting ]  )} asDictionary
+]
