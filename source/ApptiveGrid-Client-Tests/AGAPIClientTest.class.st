@@ -109,6 +109,40 @@ AGAPIClientTest >> testAddField [
 ]
 
 { #category : #testing }
+AGAPIClientTest >> testAddPersistentGrid [
+
+	| space result grids |
+	space := self getSpace.
+	self httpClient installSpaceResponse. 
+	self httpClient installGridsResponse. 
+	grids := space grids.
+	self httpClient installAddGridResponse. 
+	self httpClient installGridResponse. 
+	result := space addPersistentGrid.
+	self httpClient installGridsResponseWith: (grids items , {result}). 
+	self assert: (result isKindOf: ApptiveGridProxy).
+	self assert: (space grids items size ) equals: grids items size +1.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testAddVirtualGrid [
+
+	| space result grids grid |
+	grid := self getGrid.
+	space := grid space.
+	self httpClient installGridsResponseWith: {  }.
+	grids := space virtualGrids.
+	self assert: grids items size equals: 0.
+	self httpClient installGridResponse.
+	self httpClient installAddVirtualGridResponse.  
+	self httpClient installVirtualGridResponse. 
+	result := grid addVirtualGrid.
+	self assert: (result isKindOf: ApptiveVirtualGridProxy).
+	self httpClient installGridsResponseWith: {result  }.
+	self assert: (space virtualGrids items size ) equals: grids items size +1.
+]
+
+{ #category : #testing }
 AGAPIClientTest >> testPatchEntity [
 
 	|  result entity |
@@ -177,6 +211,32 @@ AGAPIClientTest >> testPatchGriddKey [
 	self assert: grid key equals: key.
 ]
 
+{ #category : #tests }
+AGAPIClientTest >> testPatchSpaceKey [
+
+	| space result name |
+	space := self getSpace.
+	name := 'newname'.
+	self httpClient installSpaceResponse.
+	self httpClient installPatchSpaceResponse.
+	self httpClient installSpaceResponseName: space name key: 'newname' grids: {}.
+	result := space updateKey: name.
+	self assert: space key equals: name.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testPatchSpaceName [
+
+	| space result name |
+	space := self getSpace.
+	name := 'newname'.
+	self httpClient installSpaceResponse.
+	self httpClient installPatchSpaceResponse.
+	self httpClient installSpaceResponseName:  name key: space key grids: {}.
+	result := space updateName: name.
+	self assert: space name equals: name.
+]
+
 { #category : #testing }
 AGAPIClientTest >> testRemoveEntity [
 
@@ -203,6 +263,38 @@ AGAPIClientTest >> testRemoveField [
 	
 	field remove.
 	self assert: (grid fields size) equals: 2.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testRemoveGrid [
+
+	| space grid result grids |
+	grid := self getGrid.
+
+	space := grid space.
+	grids := space grids.
+
+	grid := space grids first.
+	self httpClient installGridResponse.
+	self httpClient installRemoveGridResponse.
+	self httpClient installGridsResponseWith:
+		(grids items copyWithout: grid).
+	result := grid remove.
+	self assert: space grids items size equals: grids items size - 1
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testRemoveSpace [
+
+	|space user spaces |
+	space := self getSpace.
+	user := space owner.
+	spaces := user spaces.
+	self httpClient installSpaceResponse.
+	self httpClient installRemoveSpaceResponse.  
+	space remove.
+	self httpClient installSpacesResponseWith: (spaces items copyWithout: space). 
+	self assert: user spaces numberOfItems equals: (spaces numberOfItems - 1)
 ]
 
 { #category : #testing }
