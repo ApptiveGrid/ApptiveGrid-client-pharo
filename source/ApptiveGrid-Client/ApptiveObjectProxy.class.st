@@ -75,3 +75,13 @@ ApptiveObjectProxy >> updateFull [
 		parse: (NeoJSONReader fromString: response contents);
 		object 
 ]
+
+{ #category : #private }
+ApptiveObjectProxy >> validateLinkNamed: linkName [
+	
+	(self hasLinkNamed: linkName) ifFalse: [ 
+		self updateFull.
+		(self hasLinkNamed: linkName) ifFalse: [ 
+		Error signal: 'you cannot access ', linkName,' for this ', self class name,' on the backend' ]].
+
+]

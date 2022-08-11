@@ -14,7 +14,6 @@ AGAPIClientTest >> getEntity [
 	grid := self getGrid.
 	self httpClient installGridResponse.
 	self httpClient installEntitiesResponse .
-	self httpClient installEntityResponse .
 	^ grid entities first
 ]
 
@@ -93,6 +92,23 @@ AGAPIClientTest >> testAddEntityTypeMismatch [
 ]
 
 { #category : #testing }
+AGAPIClientTest >> testAddField [
+
+	| grid result fields |
+	grid := self getGrid.
+	self httpClient installGridResponse.
+	fields := grid fields.
+	self httpClient installAddFieldResponse.
+	self httpClient installFieldResponseName: 'newField' key: '' type: (ApptiveStringType typeName).
+	result := grid addField:  'newField' type:  (ApptiveStringType new).
+	self assert: (result isKindOf: ApptiveFieldProxy).
+	self assert: result type name equals: ApptiveStringType typeName.
+	self assert: result  name equals: 'newField'.
+	self httpClient installGridResponseName: grid name key: grid key fields: (fields ,{ result}).
+	self assert: (grid fields  size ) equals: 4.
+]
+
+{ #category : #testing }
 AGAPIClientTest >> testPatchEntity [
 
 	|  result entity |
@@ -136,10 +152,65 @@ AGAPIClientTest >> testPatchEntityTypeMismatch [
 ]
 
 { #category : #testing }
+AGAPIClientTest >> testPatchGridName [
+
+	| grid result name |
+	grid := self getGrid.
+	name := 'newname'.
+	self httpClient installGridResponse.
+	self httpClient installPatchGridResponse. 
+	self httpClient installGridResponseName: name key: grid key fields: grid fields.
+	result := grid updateName: name.
+	self assert: grid name equals: name.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testPatchGriddKey [
+
+	| grid result key |
+	grid := self getGrid.
+	key := 'newkey'.
+	self httpClient installGridResponse.
+	self httpClient installPatchGridResponse. 
+	self httpClient installGridResponseName: grid name key: key fields: grid fields.
+	result := grid updateKey: key.
+	self assert: grid key equals: key.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testRemoveEntity [
+
+	| entity grid ids |
+	entity := self getEntity.
+	grid := entity grid.
+	ids := (grid entities items collect: #id) asOrderedCollection remove: entity id; yourself.
+	self httpClient installRemoveEntityResponse.
+	self httpClient installEntitiesResponseWith:  ids.
+	entity remove.
+	self assert: (grid entities numberOfItems) equals: 2.
+]
+
+{ #category : #testing }
+AGAPIClientTest >> testRemoveField [
+
+	| grid field fields |
+	grid := self getGrid.
+	self httpClient installGridResponse. 
+	field := grid fields anyOne.
+	fields := grid fields allButFirst.
+	self httpClient installRemoveFieldResponse.
+	self httpClient installGridResponseName: grid name key: grid key fields:  fields.
+	
+	field remove.
+	self assert: (grid fields size) equals: 2.
+]
+
+{ #category : #testing }
 AGAPIClientTest >> testUpdateEntity [
 
 	|  result entity |
 	entity := self getEntity.
+	self httpClient installEntityResponse.
 	self httpClient installUpdateEntityResponse  .
 	result := entity updateWithValues: { 2. 'name2'. 'description2' }.
 	self assert: result fields equals: { 2. 'name2'. 'description2' }
@@ -151,6 +222,7 @@ AGAPIClientTest >> testUpdateEntitySizeMismatch [
 
 	|  entity |
 	entity := self getEntity.
+	self httpClient installEntityResponse. 
 	self httpClient installUpdateEntitySizeMismatchResponse.
 	"update expects values for all fields to be submitted"
 	self should: [entity updateWithValues: { 2. 'name2'.  }] raise: ApptiveUnexpectedResponse .
@@ -162,6 +234,7 @@ AGAPIClientTest >> testUpdateEntityTypeMismatch [
 
 	| entity |
 	entity := self getEntity.
+	self httpClient installEntityResponse. 
 	self httpClient installUpdateEntityTypeMismatchResponse.
 	self should: [  entity updateWithValues: { '2'. 'name2'. 'description2' } ]  raise: ApptiveUnexpectedResponse .
 	
