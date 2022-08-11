@@ -17,6 +17,11 @@ ApptiveRemoteMethodInvocation >> arguments: aCollection [
 ]
 
 { #category : #accessing }
+ApptiveRemoteMethodInvocation >> client [
+	^ client 
+]
+
+{ #category : #accessing }
 ApptiveRemoteMethodInvocation >> client: anObject [
 
 	client := anObject

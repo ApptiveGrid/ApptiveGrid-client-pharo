@@ -28,6 +28,12 @@ ApptiveGridClient >> httpClient [
 ]
 
 { #category : #accessing }
+ApptiveGridClient >> httpClient: aClient [
+	
+	httpClient := aClient
+]
+
+{ #category : #accessing }
 ApptiveGridClient >> user [
 	| response client |
 	client := self httpClient
