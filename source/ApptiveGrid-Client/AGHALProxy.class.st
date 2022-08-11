@@ -29,8 +29,12 @@ AGHALProxy >> callList: aString objectClass: aClass [
 
 { #category : #calling }
 AGHALProxy >> callPagedList: aString objectClass: aClass [
-	(links notNil and: [ links includesKey: aString ]) ifFalse: [
-		self updateFull ].
+	^ self callPagedList: aString objectClass: aClass query: nil
+]
+
+{ #category : #calling }
+AGHALProxy >> callPagedList: aString objectClass: aClass query: query [
+	self validateLinkNamed: aString.
 	^ links 
 		at: aString 
 		ifPresent: [ :method | 
@@ -38,6 +42,7 @@ AGHALProxy >> callPagedList: aString objectClass: aClass [
 				convertPagedList: (ApptiveRemoteMethodInvocation new
 					client: apptiveClient;
 					objectClass: aClass;
+					query: query;
 					method: method) execute contents
 				objectClass: aClass ]
 		ifAbsent: [ 
