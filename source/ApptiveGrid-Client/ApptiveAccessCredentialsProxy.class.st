@@ -47,6 +47,23 @@ ApptiveAccessCredentialsProxy >> printOn: aStream [
 	aStream << 'access credentials: ' << name asString
 ]
 
+{ #category : #api }
+ApptiveAccessCredentialsProxy >> remove [
+
+	| r |
+	self validateLinkNamed: #remove.
+	r := apptiveClient newMethodInvocation
+		     objectClass: ApptiveAccessCredentialsProxy;
+		     method: (self linkNamed: #remove);
+		     execute.
+	r isSuccess ifFalse: [ 
+		ApptiveUnexpectedResponse new
+			response: r;
+			signal ].
+	owner resetAccessCredentials.
+	^ self returnRemoveSuccess
+]
+
 { #category : #accessing }
 ApptiveAccessCredentialsProxy >> role [
 

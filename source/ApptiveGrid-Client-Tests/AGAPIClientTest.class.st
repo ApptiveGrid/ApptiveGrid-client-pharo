@@ -284,6 +284,20 @@ AGAPIClientTest >> testRemoveGrid [
 ]
 
 { #category : #testing }
+AGAPIClientTest >> testRemoveSpace [
+
+	|space user spaces |
+	space := self getSpace.
+	user := space owner.
+	spaces := user spaces.
+	self httpClient installSpaceResponse.
+	self httpClient installRemoveSpaceResponse.  
+	space remove.
+	self httpClient installSpacesResponseWith: (spaces items copyWithout: space). 
+	self assert: user spaces numberOfItems equals: (spaces numberOfItems - 1)
+]
+
+{ #category : #testing }
 AGAPIClientTest >> testUpdateEntity [
 
 	|  result entity |
