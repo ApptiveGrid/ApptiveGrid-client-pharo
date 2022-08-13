@@ -5,7 +5,8 @@ Class {
 		'name',
 		'entities',
 		'fields',
-		'space'
+		'space',
+		'key'
 	],
 	#category : #'ApptiveGrid-Client'
 }
@@ -17,7 +18,7 @@ ApptiveGridProxy class >> acceptHeader [
 
 { #category : #accessing }
 ApptiveGridProxy class >> jsonKeys [
-	^ #( id name fields )
+	^ #( id name fields key)
 ]
 
 { #category : #'instance creation' }
@@ -32,7 +33,7 @@ ApptiveGridProxy >> addEntity: anObject layout: layout [
 	(self hasLinkNamed: #addEntity) ifFalse: [ 
 		Error signal: 'you cannot access addEntity on the backend' ].
 	r := apptiveClient newMethodInvocation
-		objectClass: ApptiveEntityProxy;
+		objectClass: ApptiveGridProxy;
 		method: (self linkNamed: #addEntity);
 		query: { #layout -> layout } asDictionary;
 		arguments: anObject;
@@ -42,44 +43,54 @@ ApptiveGridProxy >> addEntity: anObject layout: layout [
 
 ]
 
-{ #category : #adding }
+{ #category : #api }
 ApptiveGridProxy >> addEntityWithValues: aCollectionOfValues [ 
 
 	^ self addEntity: {#fields -> aCollectionOfValues} asDictionary layout: #indexed
 	
 ]
 
-{ #category : #'as yet unclassified' }
-ApptiveGridProxy >> callEntitiesList: aString [
-self halt.
-	(links notNil and: [ links includesKey: aString ]) ifFalse: [
-		self updateFull ].
-	^ links 
-		at: aString 
-		ifPresent: [ :method | self convertEntityList: (self execute: method)   ]
-		ifAbsent: [ 
-			Error signal: 'you are not allowed to execute ', aString asString ]
+{ #category : #private }
+ApptiveGridProxy >> addField: aDictionary [
+	| r |
+	self validateLinkNamed: #addField.
+	r := apptiveClient newMethodInvocation
+		objectClass: ApptiveGridProxy;
+		method: (self linkNamed: #addField);
+		arguments: aDictionary;
+		execute.
+	r isSuccess ifFalse: [ ApptiveUnexpectedResponse  new response: r; signal. ].
+	fields := nil.
+	^ self returnCreated: r objectClass: ApptiveFieldProxy 
+
 ]
 
-{ #category : #'as yet unclassified' }
-ApptiveGridProxy >> convertEntity: aCollection [ 
-self halt.
-	^ ApptiveEntityProxy new 
-		fields: aCollection;
-		yourself
+{ #category : #api }
+ApptiveGridProxy >> addField: fieldName type: aType [
+
+	^ self addField: {#name -> fieldName. #type -> aType asJson}  asDictionary
+	
 ]
 
-{ #category : #'as yet unclassified' }
-ApptiveGridProxy >> convertEntityList: aString [ 
-	| pagingList items |
-	self halt.
-	items := (NeoJSONReader fromString: aString) collect: [ :each | 
-			self convertEntity: each ].
-	pagingList := ApptiveList new 
-		apptiveClient: apptiveClient;
-		objectClass: ApptiveEntityProxy;
-		items: items.
-	^ pagingList 
+{ #category : #api }
+ApptiveGridProxy >> addVirtualGrid [
+
+	^ self addVirtualGrid: { 'fields' -> (self fields collect: #id). 'filter' -> {  } asDictionary } asDictionary
+]
+
+{ #category : #api }
+ApptiveGridProxy >> addVirtualGrid: aDictionary [
+	| r |
+	self validateLinkNamed: #addVirtualGrid.
+	r := apptiveClient newMethodInvocation
+		objectClass: ApptiveGridProxy;
+		method: (self linkNamed: #addVirtualGrid);
+		arguments: aDictionary;
+		execute.
+	r isSuccess ifFalse: [ ApptiveUnexpectedResponse  new response: r; signal. ].
+	space resetGrids.
+	^ self returnCreated: r objectClass: ApptiveVirtualGridProxy 
+
 ]
 
 { #category : #accessing }
@@ -91,6 +102,12 @@ ApptiveGridProxy >> entities [
 		entities := (self callPagedList: #entities objectClass: ApptiveEntityProxy) do: [ :each | each grid: self ] ]
 ]
 
+{ #category : #accessing }
+ApptiveGridProxy >> entities: anObject [
+
+	entities := anObject
+]
+
 { #category : #testing }
 ApptiveGridProxy >> fieldNamed: aString [ 
 	^ fields 
@@ -100,7 +117,7 @@ ApptiveGridProxy >> fieldNamed: aString [
 
 { #category : #accessing }
 ApptiveGridProxy >> fields [
-	^ fields 
+	^ fields ifNil: [self updateFull. fields  ]
 ]
 
 { #category : #accessing }
@@ -112,6 +129,16 @@ ApptiveGridProxy >> fields: aCollection [
 { #category : #testing }
 ApptiveGridProxy >> includesFieldNamed: aString [ 
 	^ fields anySatisfy: [ :each | ((each at: 'id') = aString) or: [ (each at: 'key') = aString ] ]
+]
+
+{ #category : #accessing }
+ApptiveGridProxy >> key [
+	^ key
+]
+
+{ #category : #accessing }
+ApptiveGridProxy >> key: aString [
+	key := aString
 ]
 
 { #category : #accessing }
@@ -139,9 +166,72 @@ ApptiveGridProxy >> newField [
 		yourself
 ]
 
+{ #category : #'instance creation' }
+ApptiveGridProxy >> newVirtualGrid [
+	^ ApptiveVirtualGridProxy new
+		apptiveClient: apptiveClient;
+		grid: self;
+		yourself
+]
+
+{ #category : #private }
+ApptiveGridProxy >> patch: aDictionary [
+	| r |
+	
+	self validateLinkNamed: #patch.
+	r := apptiveClient newMethodInvocation
+		objectClass: ApptiveGridProxy;
+		method: (self linkNamed: #patch);
+		arguments: aDictionary;
+		execute.
+	r isSuccess ifFalse: [ ApptiveUnexpectedResponse  new response: r; signal. ].
+	^ self returnUpdateSuccess
+]
+
 { #category : #printing }
 ApptiveGridProxy >> printOn: aStream [ 
 	aStream << 'grid: ' << name asString
+]
+
+{ #category : #api }
+ApptiveGridProxy >> remove [
+
+	| r |
+	self validateLinkNamed: #remove.
+	r := apptiveClient newMethodInvocation
+		     objectClass: ApptiveGridProxy;
+		     method: (self linkNamed: #remove);
+		     execute.
+	r isSuccess ifFalse: [ 
+		ApptiveUnexpectedResponse new
+			response: r;
+			signal ].
+	self space resetGrids.
+	^ self returnRemoveSuccess
+]
+
+{ #category : #private }
+ApptiveGridProxy >> removeField: aDictionary [
+
+	| r |
+	self validateLinkNamed: #removeField.
+	r := apptiveClient newMethodInvocation
+		     objectClass: ApptiveGridProxy;
+		     method: (self linkNamed: #removeField);
+				arguments: aDictionary;
+		     execute.
+	r isSuccess ifFalse: [ 
+		ApptiveUnexpectedResponse new
+			response: r;
+			signal ].
+	self fields: nil.
+	^ self returnRemoveSuccess
+]
+
+{ #category : #api }
+ApptiveGridProxy >> removeFieldId: anId [
+
+	^ self removeField: { #fieldId -> anId  } asDictionary
 ]
 
 { #category : #services }
@@ -151,13 +241,28 @@ ApptiveGridProxy >> resolveParsing [
 ]
 
 { #category : #accessing }
+ApptiveGridProxy >> space [
+	^ space 
+]
+
+{ #category : #accessing }
 ApptiveGridProxy >> space: anApptiveSpaceProxy [ 
 	space := anApptiveSpaceProxy 
 ]
 
-{ #category : #adding }
-ApptiveGridProxy >> updateEntityWithValues: aCollectionOfValues [ 
+{ #category : #api }
+ApptiveGridProxy >> updateKey: newkey [
 
-	^ self updateEntity: {#fields -> aCollectionOfValues} asDictionary layout: #indexed
-	
+	^ self patch: { 'key' -> newkey } asDictionary
+]
+
+{ #category : #api }
+ApptiveGridProxy >> updateName: newname [
+
+	^ self patch: { 'name' -> newname } asDictionary
+]
+
+{ #category : #api }
+ApptiveGridProxy >> virtualGrids [ 
+	^ (self callPagedList: #virtualGrids objectClass: ApptiveVirtualGridProxy ) do: [ :each | each grid: self ] .
 ]

@@ -29,8 +29,12 @@ AGHALProxy >> callList: aString objectClass: aClass [
 
 { #category : #calling }
 AGHALProxy >> callPagedList: aString objectClass: aClass [
-	(links notNil and: [ links includesKey: aString ]) ifFalse: [
-		self updateFull ].
+	^ self callPagedList: aString objectClass: aClass query: nil
+]
+
+{ #category : #calling }
+AGHALProxy >> callPagedList: aString objectClass: aClass query: query [
+	self validateLinkNamed: aString.
 	^ links 
 		at: aString 
 		ifPresent: [ :method | 
@@ -38,6 +42,7 @@ AGHALProxy >> callPagedList: aString objectClass: aClass [
 				convertPagedList: (ApptiveRemoteMethodInvocation new
 					client: apptiveClient;
 					objectClass: aClass;
+					query: query;
 					method: method) execute contents
 				objectClass: aClass ]
 		ifAbsent: [ 
@@ -122,7 +127,14 @@ AGHALProxy >> returnOk: aZnResponse objectClass: class [
 ]
 
 { #category : #private }
-AGHALProxy >> returnUpdateOk: aZnResponse [ 
+AGHALProxy >> returnRemoveSuccess [
 
-	^ self initializeFrom: (NeoJSONReader fromString: aZnResponse contents)
+	"if object was successfully removed, the container should be updated"
+]
+
+{ #category : #private }
+AGHALProxy >> returnUpdateSuccess [
+
+	"if object was successfully updated, we need to synchronize it with backend"
+	self updateFull
 ]
